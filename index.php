@@ -47,30 +47,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
-    <div class="container">
-        <a class="navbar-brand" href="index.html">Logo</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Oferty pracy</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Dodaj ofertę</a>
-                </li>
-                <li class="nav-item">
-                    <button type="button" class="btn mt-1 btn-secondary btn-sm  me-1">Rejestruj</button>
-                </li>
-                <li class="nav-item">
-                    <button type="button" class="btn mt-1 btn-danger btn-sm">Loguj</button>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<?php include 'header.html'; ?>
 
 <div class="jumbotron shadow">
     <h1 class="display-4">Znajdź pracę marzeń</h1>
