@@ -9,7 +9,7 @@
   <style>
     body {
       padding-top: 70px;
-      background-image: url("images/3324303.jpg");
+      background-image: url("images/loginbg.png");
       background-size: cover;
       background-repeat: no-repeat; 
     }
@@ -22,6 +22,7 @@
     .btn-login {
       width: 400px;
       height: 400px;
+      background: white;
       display: flex;
       flex-direction: column;
       align-items: center;

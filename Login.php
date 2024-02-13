@@ -23,6 +23,7 @@
 
     .login-container {
         max-width: 460px;
+        background: white;
         margin: 150px auto 50px;
         padding: 20px;
         border-radius: 10px;
@@ -83,6 +84,20 @@
       color: #007bff;
       text-decoration: none;
     }
+    @keyframes slideInButtons {
+      0% {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .img-login {
+      animation: slideInButtons 0.5s ease forwards;
+    }
   </style>
 </head>
 <body>
@@ -100,7 +115,7 @@
   if ($isUser) {
     echo <<< end
         <a href="RegisterLogin.php">
-            <img src="images/user.png" alt="Logo Uzytkownika">
+            <img src="images/user.png" alt="Logo Uzytkownika" class = "img-login">
         </a>
             <h2>Logowanie jako Pracownik</h2>
     end;
@@ -108,13 +123,21 @@
 else {
     echo <<< end
         <a href="RegisterLogin.php">
-            <img src="images/company.png" alt="Logo firmy">
+            <img src="images/company.png" alt="Logo firmy" class = "img-login">
         </a>
             <h2>Logowanie jako firma</h2>
     end;
 }
   ?>
   <form action="process_login.php" method="post">
+  <?php
+  if($isUser)
+  {
+    echo <<< end
+    <input type="hidden" name="isUser"> 
+    end;
+  }  
+?>
     <div class="form-group">
       <label for="email">Email:</label>
       <input type="email" id="email" name="email" required>
@@ -142,7 +165,6 @@ else {
         <a href="register.php">Zarejestruj się jako firma</a>
     end;
   }
-
 ?>
   </div>
 </div>
