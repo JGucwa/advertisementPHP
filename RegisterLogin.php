@@ -77,7 +77,7 @@
 <body>
   
 <header>
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-white fixed-top shadow">
         <div class="container">
             <a class="navbar-brand" href="index.php">Logo</a>
         </div>

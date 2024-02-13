@@ -24,7 +24,7 @@
     .registration-container {
         max-width: 460px;
         background: white;
-        margin: 150px auto 50px;
+        margin: 50px auto 50px;
         padding: 20px;
         border-radius: 10px;
         font-family: 'Roboto', sans-serif;
@@ -83,6 +83,20 @@
       border-radius: 5px;
       resize: vertical;
     }
+    #addRecordButton {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      margin: 0px 0px 15px 0px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #addRecordButton:hover {
+      background-color: #0056b3;
+    }
     .registration-options {
       text-align: center;
       margin-top: 20px;
@@ -110,7 +124,7 @@
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-white fixed-top shadow">
         <div class="container">
             <a class="navbar-brand" href="index.php">Logo</a>
         </div>
@@ -119,18 +133,21 @@
 
 <div class="registration-container">
     <a href="RegisterLogin.php">
-        <img src="images/company.png" alt="Logo firmy" class="img-registration">
+      <img src="images/company.png" alt="Logo firmy" class="img-registration">
     </a>
     <h2>Rejestracja jako firma</h2>
-    <form action="process_registration.php" method="post">
+    <form action="process_registration.php" method="post" id="registrationForm">
         <div class="form-group">
             <label for="company_name">Nazwa firmy:</label>
             <input type="text" id="company_name" name="company_name" required>
         </div>
         <div class="form-group">
             <label for="company_nip">NIP:</label>
-            <input type="text" id="company_nip" placeholder="000-0000000-0" pattern="[0-9]*" maxlength="10" onkeypress="tylkoCyfry(event)" name="company_name" required>
+            <input type="text" id="company_nip" placeholder="000-0000000-0" pattern="\d{10}" maxlength="10" onkeypress="OnlyNumbers(event)" name="company_nip" required>
         </div>
+        <div id="links">
+        </div>
+        <button type="button" id = "addRecordButton" onclick="AddRecord()">Dodaj odnośnik</button>
         <div class="form-group">
             <label for="company_description">Opis:</label>
             <textarea id="company_description" name="company_description"></textarea>
@@ -144,6 +161,10 @@
             <input type="password" id="company_password" name="company_password" required>
         </div>
         <div class="form-group">
+            <label for="company_password2">Powtórz hasło:</label>
+            <input type="password" id="company_password2" name="company_password2" required>
+        </div>
+        <div class="form-group">
             <input type="submit" value="Zarejestruj">
         </div>
     </form>
@@ -151,13 +172,50 @@
         <a href="login.php">Masz już konto? Zaloguj się</a>
     </div>
 </div>
+
 <script>
-    function tylkoCyfry(event) {
-    var klawisz = event.keyCode || event.which;
-    klawisz = String.fromCharCode(klawisz);
-    if (!/[0-9]/.test(klawisz)) {
-      event.preventDefault();
+    let recordIndex = 1;
+
+    function validateUrl(url) {
+    const regex = /^(?:http|https):\/\/\S+/;
+    return regex.test(url);
     }
+
+    function AddRecord() {
+    if(recordIndex <= 10)
+    {
+      const recordsDiv = document.getElementById('links');
+      const recordHtml = `
+        <div class="form-group">
+            <label for="link_${recordIndex}">Odnośnik/link ${recordIndex}:</label>
+            <input type="text" id="link_${recordIndex}" name="link_${recordIndex}" onchange="validateInput(this)">
+            <span id="error_${recordIndex}" style="color: red;"></span>
+        </div>
+    `;
+    recordsDiv.insertAdjacentHTML('beforeend', recordHtml);
+    recordIndex++;
+    }
+    }
+
+    function validateInput(input) {
+    const inputValue = input.value;
+    const inputId = input.id;
+    const index = inputId.split('_')[1];
+    const errorSpan = document.getElementById(`error_${index}`);
+
+    if (validateUrl(inputValue)) {
+        errorSpan.textContent = '';
+    } else {
+        errorSpan.textContent = 'Nieprawidłowy adres URL';
+    }
+    }
+
+    function OnlyNumbers(event) {
+        var klawisz = event.keyCode || event.which;
+        klawisz = String.fromCharCode(klawisz);
+        if (!/[0-9]/.test(klawisz)) {
+            event.preventDefault();
+        }
     }
 </script>
 </body>
