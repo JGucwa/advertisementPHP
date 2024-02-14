@@ -127,7 +127,7 @@ else{
     end;
 }
   ?>
-  <form action="process_login.php" method="post">
+  <form action="scripts/process_login.php" method="post">
   <?php
   if(isset($_GET['isUser']))
   {

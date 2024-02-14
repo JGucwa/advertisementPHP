@@ -67,7 +67,7 @@
 </head>
 <body>
   
-  <?php include 'header.html'; ?>
+  <?php include 'header.php'; ?>
 
   <header class="bg-image text-center py-5 shadow">
     <div class="container">

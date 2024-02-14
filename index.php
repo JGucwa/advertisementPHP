@@ -47,7 +47,7 @@
 </head>
 <body>
 
-<?php include 'header.html'; ?>
+<?php include 'header.php'; ?>
 
 <div class="jumbotron shadow">
     <h1 class="display-4">Znajdź pracę marzeń</h1>

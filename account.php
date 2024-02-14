@@ -49,11 +49,13 @@
   <section class="container">
     <div class="row">
         <div class="col-5 col-md-10">
-            <button type="button" class="btn mt-1 btn-secondary btn-sm">Powrót</button>
+          <button type="button" class="btn mt-1 btn-secondary btn-sm">Powrót</button>
         </div>
         <div class="col-7 col-md-2">
             <button type="button" class="btn mt-1 btn-success btn-sm ">Edytuj dane</button>
-            <button type="button" class="btn mt-1 btn-danger btn-sm">Wyloguj</button>
+            <a href="scripts/process_logout.php">
+              <button type="button" class="btn mt-1 btn-danger btn-sm">Wyloguj</button>
+            </a>
         </div>
     </div>
 

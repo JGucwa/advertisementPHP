@@ -153,11 +153,11 @@
           </div>
           <div class="form-group">
               <label for="user_birthdate">Data urodzenia:</label>
-              <input type="text" id="user_birthdate" name="user_birthdate" required>
+              <input type="date" id="user_birthdate" name="user_birthdate" required>
           </div>
           <div class="form-group">
               <label for="user_number">Numer telefonu:</label>
-              <input type="email" id="user_number" name="user_number" required>
+              <input type="number" id="user_number" name="user_number" pattern="\d{9}" required>
           </div>
           <div class="form-group">
               <label for="user_email">Email:</label>
@@ -165,7 +165,7 @@
           </div>
           <div class="form-group">
               <label for="user_password">Hasło:</label>
-              <input type="password" id="user_password" name="user_password" required>
+              <input type="password" id="user_password" pattern=".{8,30}" name="user_password" required title="Hasło musi mieć od 8 do 30 znaków">
           </div>
           <div class="form-group">
               <label for="user_password2">Powtórz hasło:</label>
@@ -209,7 +209,7 @@
           </div>
           <div class="form-group">
               <label for="company_password">Hasło:</label>
-              <input type="password" id="company_password" name="company_password" required>
+              <input type="password" id="company_password" pattern=".{8,30}" name="company_password" required title="Hasło musi mieć od 8 do 30 znaków">>
           </div>
           <div class="form-group">
               <label for="company_password2">Powtórz hasło:</label>
