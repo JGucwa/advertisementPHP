@@ -11,7 +11,7 @@
         }
 
         .jumbotron {
-            background-image: url('indeximg.png');
+            background-image: url('images/indeximg.png');
             color: black;
             text-align: center;
             padding: 100px 0;

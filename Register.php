@@ -130,48 +130,105 @@
         </div>
     </nav>
 </header>
+<?php 
 
-<div class="registration-container">
-    <a href="RegisterLogin.php">
-      <img src="images/company.png" alt="Logo firmy" class="img-registration">
-    </a>
-    <h2>Rejestracja jako firma</h2>
-    <form action="process_registration.php" method="post" id="registrationForm">
-        <div class="form-group">
-            <label for="company_name">Nazwa firmy:</label>
-            <input type="text" id="company_name" name="company_name" required>
-        </div>
-        <div class="form-group">
-            <label for="company_nip">NIP:</label>
-            <input type="text" id="company_nip" placeholder="000-0000000-0" pattern="\d{10}" maxlength="10" onkeypress="OnlyNumbers(event)" name="company_nip" required>
-        </div>
-        <div id="links">
-        </div>
-        <button type="button" id = "addRecordButton" onclick="AddRecord()">Dodaj odnośnik</button>
-        <div class="form-group">
-            <label for="company_description">Opis:</label>
-            <textarea id="company_description" name="company_description"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="company_email">Email:</label>
-            <input type="email" id="company_email" name="company_email" required>
-        </div>
-        <div class="form-group">
-            <label for="company_password">Hasło:</label>
-            <input type="password" id="company_password" name="company_password" required>
-        </div>
-        <div class="form-group">
-            <label for="company_password2">Powtórz hasło:</label>
-            <input type="password" id="company_password2" name="company_password2" required>
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Zarejestruj">
-        </div>
-    </form>
-    <div class="registration-options">
-        <a href="login.php">Masz już konto? Zaloguj się</a>
+  if(isset($_GET['isUser']))
+  {
+    echo <<< tab
+  
+    <div class="registration-container">
+      <a href="RegisterLogin.php">
+        <img src="images/user.png" alt="Logo firmy" class="img-registration">
+      </a>
+      <h2>Rejestracja jako firma</h2>
+      <form action="scripts/process_registration.php" method="post" id="registrationForm">
+      <input type="hidden" name="isUser"> 
+          <div class="form-group">
+              <label for="user_firstname">Imie:</label>
+              <input type="text" id="user_firstname" name="user_firstname" required>
+          </div>
+          <div class="form-group">
+              <label for="user_surname">Nazwisko:</label>
+              <input type="text" id="user_surname" name="user_surname" required>
+          </div>
+          <div class="form-group">
+              <label for="user_birthdate">Data urodzenia:</label>
+              <input type="text" id="user_birthdate" name="user_birthdate" required>
+          </div>
+          <div class="form-group">
+              <label for="user_number">Numer telefonu:</label>
+              <input type="email" id="user_number" name="user_number" required>
+          </div>
+          <div class="form-group">
+              <label for="user_email">Email:</label>
+              <input type="email" id="user_email" name="user_email" required>
+          </div>
+          <div class="form-group">
+              <label for="user_password">Hasło:</label>
+              <input type="password" id="user_password" name="user_password" required>
+          </div>
+          <div class="form-group">
+              <label for="user_password2">Powtórz hasło:</label>
+              <input type="password" id="user_password2" name="user_password2" required>
+          </div>
+          <div class="form-group">
+              <input type="submit" value="Zarejestruj">
+          </div>
+      </form>
+      <div class="registration-options">
+          <a href="login.php?isUser=1">Masz już konto? Zaloguj się</a>
+      </div>
     </div>
-</div>
+  
+    tab;
+  }
+  else
+  {
+    echo <<< tab
+  
+    <div class="registration-container">
+      <a href="RegisterLogin.php">
+        <img src="images/company.png" alt="Logo firmy" class="img-registration">
+      </a>
+      <h2>Rejestracja jako firma</h2>
+      <form action="scripts/process_registration.php" method="post" id="registrationForm">
+          <div class="form-group">
+              <label for="company_name">Nazwa firmy:</label>
+              <input type="text" id="company_name" name="company_name" required>
+          </div>
+          <div class="form-group">
+              <label for="company_nip">NIP:</label>
+              <input type="text" id="company_nip" placeholder="000-0000000-0" pattern="\d{10}" maxlength="10" onkeypress="OnlyNumbers(event)" name="company_nip" required>
+          </div>
+          <div id="links">
+          </div>
+          <button type="button" id = "addRecordButton" onclick="AddRecord()">Dodaj odnośnik</button>
+          <div class="form-group">
+              <label for="company_email">Email:</label>
+              <input type="email" id="company_email" name="company_email" required>
+          </div>
+          <div class="form-group">
+              <label for="company_password">Hasło:</label>
+              <input type="password" id="company_password" name="company_password" required>
+          </div>
+          <div class="form-group">
+              <label for="company_password2">Powtórz hasło:</label>
+              <input type="password" id="company_password2" name="company_password2" required>
+          </div>
+          <div class="form-group">
+              <input type="submit" value="Zarejestruj">
+          </div>
+      </form>
+      <div class="registration-options">
+          <a href="login.php">Masz już konto? Zaloguj się</a>
+      </div>
+    </div>
+  
+    tab;
+  }
+  
+?>
+
 
 <script>
     let recordIndex = 1;

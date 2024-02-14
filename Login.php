@@ -108,11 +108,9 @@
         </div>
     </nav>
 </header>
-<?php $isUser = isset($_POST['isUser']);
-?>
 <div class="login-container">
 <?php
-  if ($isUser) {
+  if (isset($_GET['isUser'])) {
     echo <<< end
         <a href="RegisterLogin.php">
             <img src="images/user.png" alt="Logo Uzytkownika" class = "img-login">
@@ -120,7 +118,7 @@
             <h2>Logowanie jako Pracownik</h2>
     end;
 } 
-else {
+else{
     echo <<< end
         <a href="RegisterLogin.php">
             <img src="images/company.png" alt="Logo firmy" class = "img-login">
@@ -131,7 +129,7 @@ else {
   ?>
   <form action="process_login.php" method="post">
   <?php
-  if($isUser)
+  if(isset($_GET['isUser']))
   {
     echo <<< end
     <input type="hidden" name="isUser"> 
@@ -153,16 +151,16 @@ else {
   <div class="login-options">
     <a href="forgot_password.php">Zapomniałeś hasła?</a> |
 <?php
-  if($isUser)
+  if(isset($_GET['isUser']))
   {
     echo <<< end
-        <a href="register.php">Zarejestruj się jako Pracownik</a>
+        <a href="register.php?isUser">Zarejestruj się jako Pracownik</a>
     end;
   }  
   else
   {
     echo <<< end
-        <a href="register.php">Zarejestruj się jako firma</a>
+        <a href="register.php?">Zarejestruj się jako firma</a>
     end;
   }
 ?>

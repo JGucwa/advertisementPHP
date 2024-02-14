@@ -90,7 +90,7 @@
 <div class="container animate-buttons">
   <div class="row">
     <div class="col-md-6">
-      <form action="login.php" method="post" class="btn-login-container">
+      <form action="login.php" method="get" class="btn-login-container">
         <button type="submit" class="btn btn-block btn-login left" name="login_type" value="employee">
           <img src="images/company.png" alt="Pracownik">
           <h3>Pracodawca</h3>
@@ -98,7 +98,7 @@
       </form>
     </div>
     <div class="col-md-6">
-      <form action="login.php" method="post" class="btn-login-container">
+      <form action="login.php" method="get" class="btn-login-container">
       <input type="hidden" name="isUser"> 
         <button type="submit" class="btn btn-block btn-login right" name="login_type" value="company">
           <img src="images/user.png" alt="Firma">
