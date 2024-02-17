@@ -11,17 +11,7 @@
             $email = $_POST['user_email'];
             $password1 = $_POST['user_password'];
             $password2 = $_POST['user_password2'];
-        
-            $found_elements = array();
-    
-        for ($i = 0; $i < 10; $i++) {
-            $nam = 'link_' . ($i + 1);
-    
-            if (isset($_POST[$nam])) {
-                $element = $_POST[$nam];
-                $found_elements[] = $element;
-            }
-        }
+                   
         $sql = "SELECT * FROM user WHERE email = '$email'";
         $result = $conn->query($sql);
     
@@ -48,7 +38,7 @@
             }
 
     
-            header("refresh:0;url=../account.php?isUser");
+            header("refresh:0;url=../account.php?isUser?isEdit");
         }
 
         }
@@ -69,26 +59,39 @@
             
             echo "<script>window.history.back();</script>";
         } else {
-    
+            
+
             $sql = "INSERT INTO `company`(`email`, `password`, `nip`, `name`, `localization`, `logo`, `description`, `Verified`)
             VALUES ('$email','$password1','$nip','$name','','','','false')";
        
-           $result = $conn->query($sql);
+            $result = $conn->query($sql);
 
-           $sql = "SELECT company_id FROM company WHERE email = $email";
+            $sql = "SELECT company_id FROM company WHERE email = '$email'";
 
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
 
                 $row = $result->fetch_assoc();
+    
+                for ($i = 0; $i < 10; $i++) {
+                $nam = 'link_' . ($i + 1);
+    
+                if (isset($_POST[$nam])) {
+                    $element = $_POST[$nam];
+                    $sql = "INSERT INTO `company_links`(`company_id`, `value`)
+                    VALUES ('{$row['company_id']}','$element')";
+
+                    $result = $conn->query($sql);
+                }
+                }
                 
                 session_start();
 
                 $_SESSION['CompanyId'] = $row["company_id"];
             }
 
-           header("refresh:0;url=../account.php");
+           header("refresh:0;url=../account.php?isEdit");
         }
  
     }

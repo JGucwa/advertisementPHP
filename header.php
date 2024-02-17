@@ -45,11 +45,15 @@
                                 </a>
                             tab;
                             }
-                            echo <<< tab
-                            <a href="RegisterLogin.php">
-                                <button type="button" class="btn mt-1 btn-danger btn-sm">Zaloguj się</button>
-                            </a>
-                            tab;
+                            else
+                            {
+                                echo <<< tab
+                                <a href="RegisterLogin.php">
+                                    <button type="button" class="btn mt-1 btn-danger btn-sm">Zaloguj się</button>
+                                </a>
+                                tab;
+                            }
+
                         }
 
                     ?>

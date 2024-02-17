@@ -110,6 +110,13 @@
 </header>
 <div class="login-container">
 <?php
+  session_start();
+
+  if(isset($_SESSION['UserId']) || isset($_SESSION['CompanyId']))
+  {
+    header("refresh:0;url=index.php");
+    exit;
+  }
   if (isset($_GET['isUser'])) {
     echo <<< end
         <a href="RegisterLogin.php">

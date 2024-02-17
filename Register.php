@@ -132,6 +132,13 @@
 </header>
 <?php 
 
+  session_start();
+
+  if(isset($_SESSION['UserId']) || isset($_SESSION['CompanyId']))
+  {
+    header("refresh:0;url=index.php");
+    exit;
+  }
   if(isset($_GET['isUser']))
   {
     echo <<< tab
@@ -209,7 +216,7 @@
           </div>
           <div class="form-group">
               <label for="company_password">Hasło:</label>
-              <input type="password" id="company_password" pattern=".{8,30}" name="company_password" required title="Hasło musi mieć od 8 do 30 znaków">>
+              <input type="password" id="company_password" pattern=".{8,30}" name="company_password" required title="Hasło musi mieć od 8 do 30 znaków">
           </div>
           <div class="form-group">
               <label for="company_password2">Powtórz hasło:</label>
