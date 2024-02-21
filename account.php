@@ -45,7 +45,16 @@
 </head>
 <body>
   <header class="text-center bg-white">
-    <h1>Profil Użytkownika</h1>
+      <?php
+          if(isset($_SESSION['UserId']))
+          {
+            echo  '<h1>Profil Użytkownika</h1>';
+          }
+          else
+          {
+            echo  '<h1>Profil Firmy</h1>';
+          }
+      ?>
   </header>
   <section class="container">
     <div class="row">
