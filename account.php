@@ -62,16 +62,7 @@
         <button type="button" class="btn mt-1 btn-dark btn-sm" onClick="Back()">Powrót</button>
       </div>
       <div class="col-7 col-md-2">
-        <?php
-          if(isset($_SESSION['UserId']))
-          {
-            echo  '<a href="accountEdit.php?isUser&isEdit">';
-          }
-          else
-          {
-            echo  '<a href="accountEdit.php?isEdit">';
-          }
-        ?>
+        <a href="accountEdit.php?isEdit">
           <button type="button" class="btn mt-1 btn-dark btn-sm">Edytuj dane</button>
         </a>
         <a href="scripts/process_logout.php">
@@ -101,99 +92,181 @@
   if(isset($_SESSION['UserId']))
   {
 
-    $sql = "SELECT * FROM user";
-  
-    $result = $conn->query($sql);
-  
-    while($row = $result->fetch_assoc()) {
-
-      echo <<< tab
-          <section class="container">
-          <h2 class="mb-4">Dane Osobowe</h2>
-          <div class="row">
-            <div class="col-md-6">
+    $sql = "SELECT * FROM user WHERE user_id = '{$_SESSION['UserId']}'";
+         
+        $result = $conn->query($sql);
+      
+        while($row = $result->fetch_assoc()) 
+        {
+          echo <<< tab
+              <section class="container">
+              <h2 class="mb-4">Dane Firmy</h2>
               <div class="row">
                 <div class="col-md-3">
-                  <strong>Imię:</strong>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <img width = "100" src = '{$row["avatar"]}'/>
+                    </div>
+                  </div>
                 </div>
-                <div class="col-md-9">
-                  {$row["firstname"]}
+                <div class="col-md-4">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <strong>Imie:</strong>
+                    </div>
+                    <div class="col-md-8">
+                      {$row["firstname"]}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <strong>Nazwisko:</strong>
+                    </div>
+                    <div class="col-md-8">
+                      {$row["surname"]}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <strong>Data urodzenia:</strong>
+                    </div>
+                    <div class="col-md-8">
+                      {$row["birth_date"]}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-3">
+                      <strong>Email:</strong>
+                    </div>
+                    <div class="col-md-9">
+                      {$row["email"]}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3">
+                      <strong>Numer:</strong>
+                    </div>
+                    <div class="col-md-9">
+                      {$row["number"]}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3">
+                      <strong>Adres:</strong>
+                    </div>
+                    <div class="col-md-9">
+                      {$row["address"]}
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-3">
-                  <strong>Nazwisko:</strong>
-                </div>
-                <div class="col-md-9">
-                  {$row["surname"]}
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-3">
-                  <strong>Data urodzenia:</strong>
-                </div>
-                <div class="col-md-9">
-                  {$row["birth_date"]}
-                </div>
-              </div>             
-            </div>
-            <div class="col-md-6">
-              <p><strong>Email:</strong><a>{$row["email"]}</a></p>
-              <p><strong>Telefon:</strong><a>{$row["number"]}</a></p>
-              <p><strong>Adres:</strong><a>{$row["address"]}</a></p>
-            </div>
-          </div>
-        </section>
-        <section class="container mt-4">
-          <h2 class="mb-4">Informacje o tobie</h2>
-              <p><strong>O tobie:</strong></p>
-              <p><strong>Stanowisko:</strong></p>
-        </section>
-        <section class="container mt-4">
-          <h2 class="mb-4">Moja kariera</h2>
-          <ul class="list-group">
-            <li class="list-group-item">
-              <strong>Języki:</strong>
-              <ul>
-                <li></li>
+            </section>
+            <section class="container mt-4">
+              <h2 class="mb-4">Aktualne Stanowisko</h2>
+                  <strong>Stanowisko:</strong><p>{$row["actual_position"]}</p>
+                  <strong>Opis stanowiska:</strong><p>{$row["position_description"]}</p>
+            </section>
+            <section class="container mt-4">
+              <h2 class="mb-4">Moja kariera</h2>
+              <ul class="list-group">
+                <li class="list-group-item">
+                  <strong>Doświadczenie:</strong>
+                  <ul>                 
+          tab;
+            $sql = "SELECT * FROM user_experience WHERE user_id = {$_SESSION['UserId']}";
+      
+            $result = $conn->query($sql);
+      
+            while($row = $result->fetch_assoc())
+            {
+              echo "<li>{$row['text']}</li>";
+            }
+            echo <<< tab
+                  </ul>
+                </li>
+                <li class="list-group-item">
+                  <strong>Edukacja:</strong>
+                  <ul>                 
+          tab;
+            $sql = "SELECT * FROM user_education WHERE user_id = {$_SESSION['UserId']}";
+      
+            $result = $conn->query($sql);
+      
+            while($row = $result->fetch_assoc())
+            {
+              echo "<li>{$row['text']}</li>";
+            }
+            echo <<< tab
+                  </ul>
+                </li>
+                <li class="list-group-item">
+                  <strong>Umiejętności:</strong>
+                  <ul>                 
+          tab;
+            $sql = "SELECT * FROM user_skills WHERE user_id = {$_SESSION['UserId']}";
+      
+            $result = $conn->query($sql);
+      
+            while($row = $result->fetch_assoc())
+            {
+              echo "<li>{$row['text']}</li>";
+            }
+            echo <<< tab
+                  </ul>
+                </li>
+                <li class="list-group-item">
+                  <strong>Języki:</strong>
+                  <ul>                 
+          tab;
+            $sql = "SELECT * FROM user_languages WHERE user_id = {$_SESSION['UserId']}";
+      
+            $result = $conn->query($sql);
+      
+            while($row = $result->fetch_assoc())
+            {
+              echo "<li>{$row['text']}</li>";
+            }
+            echo <<< tab
+                  </ul>
+                </li>
+                <li class="list-group-item">
+                  <strong>Kursy:</strong>
+                  <ul>                 
+          tab;
+            $sql = "SELECT * FROM user_courses WHERE user_id = {$_SESSION['UserId']}";
+      
+            $result = $conn->query($sql);
+      
+            while($row = $result->fetch_assoc())
+            {
+              echo "<li>{$row['text']}</li>";
+            }
+            echo <<< tab
+                  </ul>
+                </li>
+                <li class="list-group-item">
+                  <strong>Linki:</strong>
+                  <ul>                 
+          tab;
+            $sql = "SELECT * FROM user_links WHERE user_id = {$_SESSION['UserId']}";
+      
+            $result = $conn->query($sql);
+      
+            while($row = $result->fetch_assoc())
+            {
+              echo "<li><a href = '{$row['text']}' class = 'text-muted no-underline'>{$row['text']}</a></li>";
+            }
+            echo <<< tab
+                  </ul>
+                </li>
               </ul>
-            </li>
-            <li class="list-group-item">
-              <strong>Doświadczenie:</strong>
-              <ul>
-                <li></li>
-              </ul>
-            </li>
-            <li class="list-group-item">
-              <strong>Umiejętności:</strong>
-              <ul>
-                <li></li>
-              </ul>
-            </li>
-            <li class="list-group-item">
-              <strong>Edukacja:</strong>
-              <ul>
-                <li></li>
-              </ul>
-            </li>
-            <li class="list-group-item">
-              <strong>Kursy:</strong>
-              <ul>
-                <li></li>
-              </ul>
-            </li>
-            <li class="list-group-item">
-              <strong>Linki:</strong>
-              <ul>
-                <li></li>
-              </ul>
-            </li>
-          </ul>
-        </section>
-
-      tab;
-
-    }
+            </section>
+    
+          tab;
+    
+        }
   }
   else
   {
