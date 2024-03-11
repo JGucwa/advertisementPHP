@@ -24,7 +24,7 @@
     
             $result = $conn->query($sql);
 
-            $sql = "SELECT user_id FROM user WHERE email = $email";
+            $sql = "SELECT user_id FROM user WHERE email = '$email'";
 
             $result = $conn->query($sql);
 

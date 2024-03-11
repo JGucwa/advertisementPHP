@@ -67,12 +67,22 @@
 </head>
 <body>
   
-  <?php include 'header.php'; ?>
+  <?php include 'header.php'; 
+    $conn = new mysqli('localhost', 'root', '', 'projekt');
+    
+    $sql = "SELECT * FROM offer WHERE offer_id = '{$_GET['offer_id']}'";
+    
+    $result = $conn->query($sql);
+    
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+  ?>
 
   <header class="bg-image text-center py-5 shadow">
     <div class="container">
-      <h1 class="display-4">Specjalista ds. Marketingu</h1>
-      <p class="lead">Firma XYZ poszukuje doświadczonego specjalisty ds. marketingu</p>
+      <h1 class="display-4">
+        <?php echo $row['position_name']; ?></h1>
+      <p class="lead"><?php $row['position_name'] ?></p>
     </div>
   </header>
 
@@ -84,11 +94,11 @@
                 <div class="col-md-6">
                     <div class="block">
                         <p><img src="images/localization.png" alt="lokalizacja" class="shadow">
-                      lokalizacja</p>
+                        <?php echo $row['localization']; ?></p>
                     </div>
                     <div class="block">
                         <p><img src="images/agreement.png" alt="potwierdzenie" class="shadow">
-                      umowa</p>
+                        <?php echo $row['type_of_contract']; ?></p>
                     </div>
                     <div class="block">
                         <p><img src="images/level.png" alt="poziom" class="shadow">
@@ -164,6 +174,13 @@
       </div>
     </div>
   </section>
+  <?php
+    } else {
+        echo "Brak wyników dla podanego ID oferty.";
+    }
+
+    $conn->close();
+  ?>
 
   <footer class="footer">
     <div class="container">
