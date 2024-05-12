@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Profil Użytkownika</title>
+  <title>Profil</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <style>
     header {
@@ -46,7 +46,9 @@
 <body>
   <header class="text-center bg-white">
       <?php
-          if(isset($_SESSION['UserId']))
+        session_start();
+        
+          if(isset($_SESSION['UserId']) || isset($_GET['userId']))
           {
             echo  '<h1>Profil Użytkownika</h1>';
           }
@@ -83,16 +85,21 @@
       header("refresh:0;url=accountEdit.php?isEdit");
     }    
   }
+
+  if(isset($_SESSION['Admin']))
+    header("refresh:0;url=adminpanel.php");
   
 
   $conn = new mysqli('localhost','root','','projekt');
 
-  session_start();
+  if(isset($_SESSION['UserId']) || isset($_GET['userId']))
+  { 
+    if(isset($_SESSION['UserId']))
+      $user = $_SESSION['UserId'];
+    else
+      $user = $_GET['userId'];
 
-  if(isset($_SESSION['UserId']))
-  {
-
-    $sql = "SELECT * FROM user WHERE user_id = '{$_SESSION['UserId']}'";
+    $sql = "SELECT * FROM user WHERE user_id = '$user'";
          
         $result = $conn->query($sql);
       
@@ -175,7 +182,7 @@
                   <strong>Doświadczenie:</strong>
                   <ul>                 
           tab;
-            $sql = "SELECT * FROM user_experience WHERE user_id = {$_SESSION['UserId']}";
+            $sql = "SELECT * FROM user_experience WHERE user_id = '$user'";
       
             $result = $conn->query($sql);
       
@@ -190,7 +197,7 @@
                   <strong>Edukacja:</strong>
                   <ul>                 
           tab;
-            $sql = "SELECT * FROM user_education WHERE user_id = {$_SESSION['UserId']}";
+            $sql = "SELECT * FROM user_education WHERE user_id = '$user'";
       
             $result = $conn->query($sql);
       
@@ -205,7 +212,7 @@
                   <strong>Umiejętności:</strong>
                   <ul>                 
           tab;
-            $sql = "SELECT * FROM user_skills WHERE user_id = {$_SESSION['UserId']}";
+            $sql = "SELECT * FROM user_skills WHERE user_id = '$user'";
       
             $result = $conn->query($sql);
       
@@ -220,7 +227,7 @@
                   <strong>Języki:</strong>
                   <ul>                 
           tab;
-            $sql = "SELECT * FROM user_languages WHERE user_id = {$_SESSION['UserId']}";
+            $sql = "SELECT * FROM user_languages WHERE user_id = '$user'";
       
             $result = $conn->query($sql);
       
@@ -235,7 +242,7 @@
                   <strong>Kursy:</strong>
                   <ul>                 
           tab;
-            $sql = "SELECT * FROM user_courses WHERE user_id = {$_SESSION['UserId']}";
+            $sql = "SELECT * FROM user_courses WHERE user_id = '$user'";
       
             $result = $conn->query($sql);
       
@@ -250,7 +257,7 @@
                   <strong>Linki:</strong>
                   <ul>                 
           tab;
-            $sql = "SELECT * FROM user_links WHERE user_id = {$_SESSION['UserId']}";
+            $sql = "SELECT * FROM user_links WHERE user_id = '$user'";
       
             $result = $conn->query($sql);
       
@@ -270,7 +277,7 @@
   }
   else
   {
-    if(isset($_SESSION['CompanyId']))
+    if(isset($_SESSION['CompanyId']) && !isset($_GET['userId']))
     {
         $sql = "SELECT * FROM company WHERE company_id = '{$_SESSION['CompanyId']}'";
          
@@ -350,7 +357,17 @@
                 <li class="list-group-item">
                   <strong>Ogłoszenia:</strong>
                   <ul>
-                    <li></li>
+                tab;
+
+                  $sql = "SELECT * FROM offer WHERE company_id = {$_SESSION['CompanyId']}";
+      
+                  $result = $conn->query($sql);
+          
+                  while($row = $result->fetch_assoc())
+                  {
+                    echo "<li>".$row['position_name']." <a href='offer.php?offer_id=".$row['offer_id']."' class='btn btn-primary'>Zobacz</a></li>";
+                  }
+              echo <<< tab
                   </ul>
                 </li>
                 <li class="list-group-item">
@@ -365,10 +382,6 @@
           tab;
     
         }
-    }
-    else
-    {
-      header("refresh:0;url=index.php");
     }
   }
   $conn->close();

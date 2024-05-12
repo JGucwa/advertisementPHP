@@ -155,6 +155,12 @@ else{
       <input type="submit" value="Zaloguj">
     </div>
   </form>
+  <div class = "login-options">
+    <?php
+      if(isset($_COOKIE['loginError']))
+        echo "<p class = 'text-danger'>".$_COOKIE['loginError']."</p>";
+    ?>
+  </div>
   <div class="login-options">
     <a href="forgot_password.php">Zapomniałeś hasła?</a> |
 <?php

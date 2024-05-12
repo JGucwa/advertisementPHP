@@ -41,7 +41,7 @@
                             {
                             echo <<< tab
                                 <a href="account.php">
-                                    <button type="button" class="btn mt-1 btn-danger btn-sm">Moje Firma</button>
+                                    <button type="button" class="btn mt-1 btn-danger btn-sm">Moja Firma</button>
                                 </a>
                             tab;
                             }

@@ -7,7 +7,7 @@
             $email = $_POST['email'];
             $password = $_POST['password'];
         
-        $sql = "SELECT user_id FROM user WHERE email = '$email' AND password = $password";
+        $sql = "SELECT user_id,Admin FROM user WHERE email = '$email' AND `password` = '$password'";
 
         $result = $conn->query($sql);
 
@@ -20,12 +20,22 @@
                 session_start();
 
                 $_SESSION['UserId'] = $row["user_id"];
+
+                if($row['Admin'] == 1)
+                {
+                    $_SESSION['Admin'] = $_SESSION['UserId'];
+
+                    header("refresh:0;url=../adminPanel.php");
+                }
+                else
+                {
+                    header("refresh:0;url=../index.php");
+                }
             }
-  
-            header("refresh:0;url=../index.php");
             
         } else {
-
+            
+            setcookie("loginError","Nieprawidłowe dane logowania",3600);
             echo "<script>window.history.back();</script>";
         }
 
@@ -56,6 +66,7 @@
             
         } else {
 
+            setcookie("loginError","Nieprawidłowe dane logowania",3600);
             echo "<script>window.history.back();</script>";
         }
 

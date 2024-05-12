@@ -20,7 +20,7 @@
             echo "<script>window.history.back();</script>";
         } else {
     
-            $sql = "INSERT INTO `user`(`Firstname`, `Surname`, `birth_date`, `email`, `password`, `number`, `Admin`) VALUES ('$firstname','$surname','$birthdate','$number','$email','$password1',false)";
+            $sql = "INSERT INTO `user`(`Firstname`, `Surname`, `birth_date`, `email`, `password`, `number`, `Admin`) VALUES ('$firstname','$surname','$birthdate','$email','$password1','$number',false)";
     
             $result = $conn->query($sql);
 

@@ -121,13 +121,15 @@
 
   $conn = new mysqli('localhost','root','','projekt');
 
-  if(isset($_SESSION['UserId']) || isset($_SESSION['CompanyId']))
-  {
-    if(isset($_GET['isEdit']))
+  if(isset($_GET['isEdit']))
     {
-      if (isset($_SESSION['UserId']))
+      if(isset($_SESSION['UserId']) && !isset($_GET['company_id']))
+        $user = $_SESSION['UserId'];
+      if (isset($_GET['user_id']))
+        $user = $_GET['user_id'];
+      if(isset($user))
       {
-        $sql = "SELECT * FROM user WHERE user_id = '{$_SESSION['UserId']}'";
+        $sql = "SELECT * FROM user WHERE user_id = '$user'";
            
           $result = $conn->query($sql);
         
@@ -139,6 +141,7 @@
                     <img src="images/user.png" alt="avatar" class="img-registration">
                 </a>
                 <form action="scripts/process_update_account.php" method="post">
+                  <input type = 'hidden' name = 'user' value = '$user'/>
                   <div class="row">
                     <div class="col-md-6">
                       <div class="row">
@@ -188,7 +191,7 @@
                       <div class="row">
                         <div id="experience">
               tab;
-                    $sql = "SELECT * FROM user_experience WHERE user_id = {$_SESSION['UserId']}";
+                    $sql = "SELECT * FROM user_experience WHERE user_id = '$user'";
               
                     $result = $conn->query($sql);
   
@@ -213,7 +216,7 @@
                       <div class="row">
                         <div id="education">
               tab;
-                    $sql = "SELECT * FROM user_education WHERE user_id = {$_SESSION['UserId']}";
+                    $sql = "SELECT * FROM user_education WHERE user_id = '$user'";
               
                     $result = $conn->query($sql);
   
@@ -238,7 +241,7 @@
                       <div class="row">
                         <div id="skills">
               tab;
-                    $sql = "SELECT * FROM user_skills WHERE user_id = {$_SESSION['UserId']}";
+                    $sql = "SELECT * FROM user_skills WHERE user_id = '$user'";
               
                     $result = $conn->query($sql);
   
@@ -262,7 +265,7 @@
                       <div class="row">
                         <div id="courses">
               tab;
-                    $sql = "SELECT * FROM user_courses WHERE user_id = {$_SESSION['UserId']}";
+                    $sql = "SELECT * FROM user_courses WHERE user_id = '$user'";
               
                     $result = $conn->query($sql);
   
@@ -286,7 +289,7 @@
                       <div class="row">
                         <div id="links">
               tab;
-                    $sql = "SELECT * FROM user_links WHERE user_id = {$_SESSION['UserId']}";
+                    $sql = "SELECT * FROM user_links WHERE user_id = '$user'";
               
                     $result = $conn->query($sql);
   
@@ -315,9 +318,14 @@
             tab;
           }
       }
-      else
+
+      if(isset($_SESSION['CompanyId']))
+        $company = $_SESSION['CompanyId'];
+      if (isset($_GET['company_id']))
+        $company = $_GET['company_id'];
+      if(isset($company))
       {
-          $sql = "SELECT * FROM company WHERE company_id = '{$_SESSION['CompanyId']}'";
+          $sql = "SELECT * FROM company WHERE company_id = '$company'";
            
           $result = $conn->query($sql);
         
@@ -329,6 +337,7 @@
                     <img src="images/company.png" alt="Logo firmy" class="img-registration">
                 </a>
                 <form action="scripts/process_update_account.php" method="post" id="registrationForm">
+                  <input type = 'hidden' name = 'company' value = '$company'/>
                   <div class="row">
                     <div class="col-md-6">
                       <div class="row">
@@ -363,7 +372,7 @@
                       <div class="row">
                         <div id="links">
               tab;
-                    $sql = "SELECT * FROM company_links WHERE company_id = {$row['company_id']}";
+                    $sql = "SELECT * FROM company_links WHERE company_id = '$company'";
               
                     $result = $conn->query($sql);
   
@@ -401,11 +410,6 @@
     {
       header("refresh:0;url=../index.php");
     }
-  }
-  else
-  {
-    header("refresh:0;url=../index.php");
-  }
 
 ?>
 <script>

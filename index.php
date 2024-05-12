@@ -80,9 +80,22 @@
             <div class="col-md-3 mb-3">
                 <label for="category" class="form-label">Kategoria</label>
                 <select class="form-select" id="category" name="category">
-                    <option value="it">IT</option>
-                    <option value="marketing">Marketing</option>
-                    <option value="finanse">Finanse</option>
+                    <?php
+                    session_start();
+                        $conn = new mysqli('localhost', 'root', '', 'projekt');
+                        
+                        $sql = "SELECT name FROM category";
+
+                        $result = $conn->query($sql);
+    
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc())
+                            {
+                                echo "<option>".$row['name']."</option>";
+                            }
+                        }
+                    ?>
+                    
                 </select>
             </div>
             <div class="col-md-3 mb-3">
@@ -94,7 +107,7 @@
                 <input type="number" class="form-control" id="distance" name="distance" min="0">
             </div>
         </div>
-        <button type="button" class="btn btn-primary">Szukaj</button>
+        <input type="submit" class="btn btn-primary" value="Szukaj"></input>
     </form>
 </div>
 <div class="container job-listing">
@@ -103,9 +116,18 @@
 <div class="container mt-5">
     <div class="row">
 <?php
-    $conn = new mysqli('localhost', 'root', '', 'projekt');
+    if(isset($_GET['keywords']))
+    {
+        $categoryid = "SELECT category_id FROM category WHERE category.name = '{$_GET['category']}'";
+        $result = $conn->query($categoryid);
+        $res = $result->fetch_assoc()['category_id'];
+        $sql = "SELECT * FROM offer WHERE position_name LIKE '%{$_GET['keywords']}%' AND category_id = '$res'";
+    }
+    else
+    {
+        $sql = "SELECT * FROM offer";
+    }
     
-    $sql = "SELECT * FROM offer";
     
     $result = $conn->query($sql);
     
@@ -140,16 +162,51 @@
     
     $result->free();
     
-    $conn->close();
-    ?>
-    
-
-    
+    $conn->close();    
 ?>  
     </div>
   </div>
 <div class="container job-listing">
-    <h2>Najczęsciej oglądane</h2>
+    <h2>Ostatnio oglądane</h2>
+    <?php
+        if(isset($_SESSION['userId']))
+        {
+            $sql = "SELECT * FROM offer JOIN offer_activity ON offer.offer_id = offer_activity.offer_id WHERE offer_activity.user_id = '{$_SESSION['userId']}' ORDER BY offer_activity.date DESC LIMIT 15";
+    
+            $sql = "SELECT * FROM offer";
+            $result = $conn->query($sql);
+             
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo "
+                        <div class='col-md-4 mt-3'>
+                            <div class='row'>
+                                <div class='col-md-12'>
+                                    <div class='card'>
+                                        <div class='card-header bg-primary text-white'>
+                                            <h3 class='card-title'>".$row['position_name']."</h3>
+                                        </div>
+                                        <div class='card-body'>
+                                            <img src='".$row['offer_image']."' alt='Zdjęcie stanowiska' class='job-image' width='100px'>
+                                            <p><strong>Opis stanowiska:</strong></p>
+                                            <p>".$row['position_description']."</p>
+                                            <p><strong>Zarobki:</strong>".$row['salary']."</p>
+                                        </div>
+                                        <div class='card-footer'>
+                                            <a href='offer.php?offer_id=".$row['offer_id']."' class='btn btn-primary'>Szczegóły</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ";
+                }
+            } else {
+                echo "Brak wyników.";
+            }
+        }
+        
+    ?>
 </div>
 <div class="container job-listing">
     <h2>Koniecznie sprawdź tych pracodawców</h2>
